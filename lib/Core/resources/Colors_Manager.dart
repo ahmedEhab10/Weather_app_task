@@ -53,5 +53,5 @@ abstract class ColorsManager {
 
   static const danger = Color(0xffEF4444);
 
-  static const info = Color(0xff38BDF8);
+  static const info = Color.fromARGB(187, 65, 195, 251);
 }

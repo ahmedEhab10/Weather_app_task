@@ -14,17 +14,18 @@ class InformationContinar extends StatelessWidget {
 
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: const Color.fromARGB(255, 235, 233, 233),
+        color:
+            ColorsManager.lightBackground, //Color.fromARGB(255, 235, 233, 233),
         shape: RoundedRectangleBorder(
           side: BorderSide(width: 1, color: const Color(0x19C3C6D7)),
           borderRadius: BorderRadius.circular(24),
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 26,
-            offset: Offset(0, 10),
-            spreadRadius: 0.6,
+            color: Color(0x1F000000),
+            blurRadius: 24.0,
+            spreadRadius: 2.0,
+            offset: Offset(4.0, 14.0),
           ),
         ],
       ),
