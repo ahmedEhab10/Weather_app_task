@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/features/Home/Presentation/Widgets/Search_Text_Field.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/information_continar.dart';
 
 class HomeScreenBody extends StatelessWidget {
@@ -9,7 +10,13 @@ class HomeScreenBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-        child: const Column(children: [InformationContinar()]),
+        child: Column(
+          children: [
+            AppSearchTextField(controller: null, onChanged: (String value) {}),
+            const SizedBox(height: 16),
+            InformationContinar(),
+          ],
+        ),
       ),
     );
   }

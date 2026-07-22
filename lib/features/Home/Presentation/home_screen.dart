@@ -9,6 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: ColorsManager.lightBackground,
       appBar: AppBar(
         title: Text(
           'Weatherly',
