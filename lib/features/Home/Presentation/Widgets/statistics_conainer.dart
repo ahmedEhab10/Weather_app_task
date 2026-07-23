@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/Core/Models/Statistics_continar_model.dart';
 import 'package:weather_app/Core/resources/Colors_Manager.dart';
-import 'package:weather_app/features/Home/domain/Entity/Weather_Entity.dart';
 
 class StatConainer extends StatelessWidget {
   const StatConainer({
@@ -65,12 +64,15 @@ class StatConainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  '$value${statisticsContinarModel.prsentpercentage ? '%' : ''} ',
-                  style: GoogleFonts.inter(
-                    fontSize: 24,
-                    color: ColorsManager.darkBackground,
-                    fontWeight: FontWeight.bold,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '$value${statisticsContinarModel.prsentpercentage ? '%' : ''} ',
+                    style: GoogleFonts.inter(
+                      fontSize: 24,
+                      color: ColorsManager.darkBackground,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 SizedBox(height: 4),

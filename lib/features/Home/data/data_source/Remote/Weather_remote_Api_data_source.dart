@@ -9,15 +9,11 @@ class WeatherRemoteApiDataSource extends WeatherRemoteDataSource {
   WeatherRemoteApiDataSource({required this.apiClient});
   @override
   Future<WeatherModel> getWeatherData({required String cityName}) async {
-    try {
-      final response = await apiClient.post(
-        endPoint: ApiConstants.weatherEndPoint,
-        queryParameters: {'key': ApiConstants.apiKey, 'q': cityName},
-      );
+    final response = await apiClient.post(
+      endPoint: ApiConstants.weatherEndPoint,
+      queryParameters: {'key': ApiConstants.apiKey, 'q': cityName},
+    );
 
-      return WeatherModel.fromJson(response.data);
-    } on Exception catch (e) {
-      throw Exception(e.toString());
-    }
+    return WeatherModel.fromJson(response.data);
   }
 }

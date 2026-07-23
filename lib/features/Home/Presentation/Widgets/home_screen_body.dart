@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/Core/Models/Statistics_continar_model.dart';
+import 'package:weather_app/Core/resources/Colors_Manager.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/Search_Text_Field.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/information_continar.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/statistics_conainer.dart';
@@ -42,7 +45,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WeatherCubit, WeatherState>(
+    return BlocConsumer<WeatherCubit, WeatherState>(
       listener: (context, state) {
         if (state is WeatherFailure) {
           ScaffoldMessenger.of(context)
@@ -55,119 +58,109 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             );
         }
       },
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                children: [
-                  AppSearchTextField(
-                    controller: _searchController,
-                    onChanged: (_) {},
-                    onClear: () {
-                      _searchController.clear();
-                      setState(() {});
-                    },
-                    onSubmitted: (_) => _searchWeather(),
+
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              children: [
+                AppSearchTextField(
+                  controller: _searchController,
+                  onChanged: (_) {},
+                  onClear: () {
+                    _searchController.clear();
+                    setState(() {});
+                  },
+                  onSubmitted: (_) => _searchWeather(),
+                ),
+
+                const SizedBox(height: 16),
+                if (state is WeatherLoading) ...[
+                  Lottie.asset(
+                    "assets/Animation/thunderstorms overcast-rain no result found.json",
+                    height: 100,
+                    width: 100,
                   ),
-
-                  const SizedBox(height: 16),
-
-                  BlocBuilder<WeatherCubit, WeatherState>(
-                    builder: (context, state) {
-                      if (state is WeatherSuccess) {
-                        return InformationContinar(
-                          weatherEntity: state.weatherEntity,
-                        );
-                      }
-
-                      return Container();
-                    },
-                  ),
+                ],
+                if (state is WeatherSuccess) ...[
+                  InformationContinar(weatherEntity: state.weatherEntity),
 
                   const SizedBox(height: 22),
 
-                  BlocBuilder<WeatherCubit, WeatherState>(
-                    builder: (context, state) {
-                      if (state is WeatherSuccess) {
-                        final weather = state.weatherEntity;
+                  GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 1.7,
+                        ),
+                    children: [
+                      StatConainer(
+                        statisticsContinarModel: StatisticsContinarModel(
+                          name: "Humidity",
+                          icon: "assets/Svg/Humidty.svg",
+                          prsentpercentage: true,
+                        ),
+                        value: '${state.weatherEntity.humidity}',
+                      ),
 
-                        return GridView(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 8,
-                                crossAxisSpacing: 8,
-                                childAspectRatio: 1.7,
-                              ),
-                          children: [
-                            StatConainer(
-                              statisticsContinarModel: StatisticsContinarModel(
-                                name: "Humidity",
-                                icon: "assets/Svg/Humidty.svg",
+                      StatConainer(
+                        statisticsContinarModel: StatisticsContinarModel(
+                          name: "Wind",
+                          icon: "assets/Svg/Wind.svg",
+                          prsentpercentage: false,
+                        ),
+                        value: '${state.weatherEntity.windKph} kph',
+                      ),
 
-                                prsentpercentage: true,
-                              ),
-                              value: '${weather.humidity}',
-                            ),
-                            StatConainer(
-                              statisticsContinarModel: StatisticsContinarModel(
-                                name: "Wind",
-                                icon: "assets/Svg/Wind.svg",
+                      StatConainer(
+                        statisticsContinarModel: StatisticsContinarModel(
+                          name: "Chance of Rain",
+                          icon: "assets/Svg/CloudCover.svg",
+                          prsentpercentage: true,
+                        ),
+                        value: '${state.weatherEntity.cloud}',
+                      ),
 
-                                prsentpercentage: false,
-                              ),
-                              value: '${weather.windKph}kph',
-                            ),
-                            StatConainer(
-                              statisticsContinarModel: StatisticsContinarModel(
-                                name: "Chance of Rain",
-                                icon: "assets/Svg/CloudCover.svg",
-
-                                prsentpercentage: true,
-                              ),
-                              value: '${weather.cloud}',
-                            ),
-                            StatConainer(
-                              statisticsContinarModel: StatisticsContinarModel(
-                                name: "UV Index",
-                                icon: "assets/Svg/UV Index.svg",
-
-                                prsentpercentage: false,
-                              ),
-                              value: '${weather.uv}',
-                            ),
-                          ],
-                        );
-                      }
-
-                      return const SizedBox();
-                    },
+                      StatConainer(
+                        statisticsContinarModel: StatisticsContinarModel(
+                          name: "UV Index",
+                          icon: "assets/Svg/UV Index.svg",
+                          prsentpercentage: false,
+                        ),
+                        value: '${state.weatherEntity.uv}',
+                      ),
+                    ],
+                  ),
+                ] else ...[
+                  Center(
+                    child: Column(
+                      children: [
+                        Lottie.asset(
+                          'assets/Animation/lets serch.json',
+                          height: 300,
+                        ),
+                        Text(
+                          "Search for a city",
+                          style: GoogleFonts.irishGrover(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.warning,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ),
+              ],
             ),
           ),
-
-          BlocBuilder<WeatherCubit, WeatherState>(
-            builder: (context, state) {
-              if (state is! WeatherLoading) {
-                return const SizedBox();
-              }
-
-              return Positioned.fill(
-                child: Container(
-                  color: Colors.black26,
-                  child: const Center(child: CircularProgressIndicator()),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

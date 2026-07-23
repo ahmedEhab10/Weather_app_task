@@ -42,7 +42,9 @@ class ApiErrorHandler {
   static Failure _handleStatusCode(Response? response) {
     switch (response?.statusCode) {
       case 400:
-        return const ServerFailure("Bad request");
+        return ServerFailure(
+          response?.data["error"]["message"] ?? "Bad Request",
+        );
 
       case 401:
         return const ServerFailure("Unauthorized");
