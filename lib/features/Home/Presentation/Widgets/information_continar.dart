@@ -10,19 +10,28 @@ class InformationContinar extends StatelessWidget {
   final WeatherEntity weatherEntity;
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? ColorsManager.darkCard : ColorsManager.lightBackground;
+    final primaryTextColor = isDark ? ColorsManager.darkText : ColorsManager.secondary;
+    final subtitleColor = isDark ? ColorsManager.darkSubtitle : ColorsManager.secondarytext;
+    final lastUpdatedColor = isDark ? ColorsManager.darkHint : ColorsManager.lightSubtitle;
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 300,
-
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color:
-            ColorsManager.lightBackground, //Color.fromARGB(255, 235, 233, 233),
+        color: cardColor,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: const Color(0x19C3C6D7)),
+          side: BorderSide(
+            width: 1,
+            color: isDark
+                ? ColorsManager.darkBorder.withOpacity(0.4)
+                : const Color(0x19C3C6D7),
+          ),
           borderRadius: BorderRadius.circular(24),
         ),
-        shadows: [
+        shadows: const [
           BoxShadow(
             color: Color(0x1F000000),
             blurRadius: 24.0,
@@ -50,7 +59,7 @@ class InformationContinar extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 56,
                     fontWeight: FontWeight.bold,
-                    color: ColorsManager.secondary,
+                    color: primaryTextColor,
                   ),
                 ),
                 const Spacer(),
@@ -78,7 +87,7 @@ class InformationContinar extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: ColorsManager.secondary,
+                color: primaryTextColor,
               ),
             ),
 
@@ -87,16 +96,16 @@ class InformationContinar extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: ColorsManager.secondarytext,
+                color: subtitleColor,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               'Last updated 03:15 AM',
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: ColorsManager.lightSubtitle,
+                color: lastUpdatedColor,
               ),
             ),
           ],
@@ -105,3 +114,4 @@ class InformationContinar extends StatelessWidget {
     );
   }
 }
+

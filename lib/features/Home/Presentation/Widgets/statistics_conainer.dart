@@ -15,18 +15,27 @@ class StatConainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? ColorsManager.darkCard : ColorsManager.lightBackground;
+    final valueColor = isDark ? ColorsManager.darkText : ColorsManager.darkBackground;
+    final labelColor = isDark ? ColorsManager.darkSubtitle : ColorsManager.secondarytext;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color:
-            ColorsManager.lightBackground, //Color.fromARGB(255, 235, 233, 233),
+        color: cardColor,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: const Color(0x19C3C6D7)),
+          side: BorderSide(
+            width: 1,
+            color: isDark
+                ? ColorsManager.darkBorder.withOpacity(0.4)
+                : const Color(0x19C3C6D7),
+          ),
           borderRadius: BorderRadius.circular(12),
         ),
-        shadows: [
+        shadows: const [
           BoxShadow(
             color: Color(0x1F000000),
             blurRadius: 24.0,
@@ -60,7 +69,7 @@ class StatConainer extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: ColorsManager.secondarytext,
+                      color: labelColor,
                     ),
                   ),
                 ),
@@ -70,7 +79,7 @@ class StatConainer extends StatelessWidget {
                     '$value${statisticsContinarModel.prsentpercentage ? '%' : ''} ',
                     style: GoogleFonts.inter(
                       fontSize: 24,
-                      color: ColorsManager.darkBackground,
+                      color: valueColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

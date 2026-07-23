@@ -10,6 +10,10 @@ class InfoContainerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final subtitleColor = isDark
+        ? ColorsManager.darkSubtitle
+        : ColorsManager.secondarytext;
     final String time = helperFunction.formatTime(
       dateTime: weatherEntity.last_updated,
     );
@@ -46,7 +50,7 @@ class InfoContainerHeader extends StatelessWidget {
               Text(
                 weatherEntity.cityName,
                 style: GoogleFonts.inter(
-                  color: ColorsManager.secondarytext,
+                  color: subtitleColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -63,7 +67,9 @@ class InfoContainerHeader extends StatelessWidget {
             Text(
               time,
               style: GoogleFonts.inter(
-                color: ColorsManager.secondary,
+                color: isDark
+                    ? ColorsManager.darkText
+                    : ColorsManager.secondary,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -73,7 +79,7 @@ class InfoContainerHeader extends StatelessWidget {
             Text(
               date,
               style: GoogleFonts.inter(
-                color: ColorsManager.secondarytext,
+                color: subtitleColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),

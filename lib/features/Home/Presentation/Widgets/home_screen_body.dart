@@ -9,6 +9,7 @@ import 'package:weather_app/Core/resources/Colors_Manager.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/Search_Text_Field.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/information_continar.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/statistics_conainer.dart';
+import 'package:weather_app/Core/Utils/custom_snackbar.dart';
 import 'package:weather_app/features/Home/Presentation/cubit/Weather_cubit/weather_cubit.dart';
 
 class HomeScreenBody extends StatefulWidget {
@@ -48,14 +49,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     return BlocConsumer<WeatherCubit, WeatherState>(
       listener: (context, state) {
         if (state is WeatherFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                behavior: SnackBarBehavior.floating,
-                content: Text(state.failure.message),
-              ),
-            );
+          CustomSnackBar.showError(context, message: state.failure.message);
         }
       },
 
@@ -98,6 +92,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       separatorBuilder: (context, index) => const SizedBox(width: 8),
                       itemBuilder: (context, index) {
                         final item = state.recentSearches[index];
+                        final isDark = Theme.of(context).brightness == Brightness.dark;
                         return GestureDetector(
                           onTap: () {
                             _searchController.text = item.cityName;
@@ -106,7 +101,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             decoration: BoxDecoration(
-                              color: ColorsManager.lightBackground,
+                              color: isDark ? ColorsManager.darkCard : ColorsManager.lightBackground,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: ColorsManager.primary.withOpacity(0.2)),
                             ),
@@ -120,7 +115,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                   style: GoogleFonts.inter(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: ColorsManager.secondarytext,
+                                    color: isDark ? ColorsManager.darkSubtitle : ColorsManager.secondarytext,
                                   ),
                                 ),
                               ],
@@ -139,8 +134,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     height: 100,
                     width: 100,
                   ),
-                ],
-                if (state is WeatherSuccess) ...[
+                ] else if (state is WeatherSuccess) ...[
                   InformationContinar(weatherEntity: state.weatherEntity),
 
                   const SizedBox(height: 22),
