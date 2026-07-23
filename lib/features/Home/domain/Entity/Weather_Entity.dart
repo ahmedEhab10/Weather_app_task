@@ -16,9 +16,9 @@ class WeatherEntity {
   final String windDirection;
 
   final int humidity;
-
+  final num cloud;
   final double feelsLikeC;
-
+  final String last_updated;
   final double uv;
 
   final int chanceOfRain;
@@ -39,5 +39,7 @@ class WeatherEntity {
     required this.feelsLikeC,
     required this.uv,
     required this.chanceOfRain,
+    required this.cloud,
+    required this.last_updated,
   });
 }

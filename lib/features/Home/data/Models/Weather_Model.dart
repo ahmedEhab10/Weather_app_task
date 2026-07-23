@@ -1,5 +1,6 @@
 import 'package:weather_app/features/Home/data/Models/Current_Model.dart';
 import 'package:weather_app/features/Home/data/Models/Location_Model.dart';
+import 'package:weather_app/features/Home/domain/Entity/Weather_Entity.dart';
 
 class WeatherModel {
   final LocationModel location;
@@ -14,23 +15,25 @@ class WeatherModel {
     );
   }
 
-  // WeatherEntity toEntity() {
-  //   return WeatherEntity(
-  //     cityName: location.name,
-  //     region: location.region,
-  //     country: location.country,
-  //     localTime: location.localTime,
-  //     tempC: current.tempC,
-  //     tempF: current.tempF,
-  //     isDay: current.isDay == 1,
-  //     condition: current.condition.text,
-  //     conditionIcon: "https:${current.condition.icon}",
-  //     windKph: current.windKph,
-  //     windDirection: current.windDir,
-  //     humidity: current.humidity,
-  //     feelsLikeC: current.feelsLikeC,
-  //     uv: current.uv,
-  //     chanceOfRain: current.chanceOfRain,
-  //   );
-  // }
+  WeatherEntity toEntity() {
+    return WeatherEntity(
+      cityName: location.name,
+      region: location.region,
+      country: location.country,
+      localTime: location.localTime,
+      tempC: current.tempC,
+      tempF: current.tempF,
+      isDay: current.isDay == 1,
+      condition: current.condition.text,
+      conditionIcon: "https:${current.condition.icon}",
+      windKph: current.windKph,
+      windDirection: current.windDir,
+      humidity: current.humidity,
+      feelsLikeC: current.feelsLikeC,
+      uv: current.uv,
+      chanceOfRain: current.chanceOfRain,
+      cloud: current.cloud,
+      last_updated: current.last_updated,
+    );
+  }
 }

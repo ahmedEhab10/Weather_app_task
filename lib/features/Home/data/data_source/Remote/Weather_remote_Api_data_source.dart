@@ -6,7 +6,7 @@ import 'package:weather_app/features/Home/data/data_source/Remote/Weather_remote
 class WeatherRemoteApiDataSource extends WeatherRemoteDataSource {
   final ApiClient apiClient;
 
-  WeatherRemoteApiDataSource(this.apiClient);
+  WeatherRemoteApiDataSource({required this.apiClient});
   @override
   Future<WeatherModel> getWeatherData({required String cityName}) async {
     try {

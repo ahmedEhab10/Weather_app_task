@@ -3,10 +3,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/Core/Models/Statistics_continar_model.dart';
 import 'package:weather_app/Core/resources/Colors_Manager.dart';
+import 'package:weather_app/features/Home/domain/Entity/Weather_Entity.dart';
 
 class StatConainer extends StatelessWidget {
-  const StatConainer({super.key, required this.statisticsContinarModel});
+  const StatConainer({
+    super.key,
+    required this.statisticsContinarModel,
+    required this.value,
+  });
   final StatisticsContinarModel statisticsContinarModel;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +66,7 @@ class StatConainer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '70${statisticsContinarModel.prsentpercentage ? '%' : ''} ',
+                  '$value${statisticsContinarModel.prsentpercentage ? '%' : ''} ',
                   style: GoogleFonts.inter(
                     fontSize: 24,
                     color: ColorsManager.darkBackground,

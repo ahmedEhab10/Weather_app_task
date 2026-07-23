@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class AppSearchTextField extends StatelessWidget {
   const AppSearchTextField({
     super.key,
-    this.controller,
+    required this.controller,
     required this.onChanged,
-    this.onSubmitted,
-    this.onClear,
+    required this.onSubmitted,
+    required this.onClear,
   });
 
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final ValueChanged<String> onChanged;
-  final ValueChanged<String>? onSubmitted;
-  final VoidCallback? onClear;
+  final ValueChanged<String> onSubmitted;
+  final VoidCallback onClear;
 
   @override
   Widget build(BuildContext context) {
@@ -39,29 +39,28 @@ class AppSearchTextField extends StatelessWidget {
           size: 24,
         ),
 
-        suffixIcon: IconButton(
-          onPressed: onClear,
-          splashRadius: 20,
-          icon: IconButton(
-            onPressed: onClear,
-            splashRadius: 20,
-            icon: Icon(
-              Icons.close_rounded,
-              color: isDark ? Colors.white70 : Colors.black54,
-            ),
-          ),
-        ),
-
-        // suffixIcon: controller!.text.isNotEmpty
-        //     ? IconButton(
-        //         onPressed: onClear,
-        //         splashRadius: 20,
-        //         icon: Icon(
-        //           Icons.close_rounded,
-        //           color: isDark ? Colors.white70 : Colors.black54,
-        //         ),
-        //       )
-        //     : null,
+        // suffixIcon: IconButton(
+        //   onPressed: onClear,
+        //   splashRadius: 20,
+        //   icon: IconButton(
+        //     onPressed: onClear,
+        //     splashRadius: 20,
+        //     icon: Icon(
+        //       Icons.close_rounded,
+        //       color: isDark ? Colors.white70 : Colors.black54,
+        //     ),
+        //   ),
+        // ),
+        suffixIcon: controller.text.isNotEmpty
+            ? IconButton(
+                onPressed: onClear,
+                splashRadius: 20,
+                icon: Icon(
+                  Icons.close_rounded,
+                  color: isDark ? Colors.white70 : Colors.black54,
+                ),
+              )
+            : null,
         filled: true,
         fillColor: isDark ? const Color(0xff1E293B) : Colors.white,
 

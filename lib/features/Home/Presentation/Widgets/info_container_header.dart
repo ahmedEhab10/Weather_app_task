@@ -1,42 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/Core/Helper/Helper_Function.dart';
 import 'package:weather_app/Core/resources/Colors_Manager.dart';
+import 'package:weather_app/features/Home/domain/Entity/Weather_Entity.dart';
 
 class InfoContainerHeader extends StatelessWidget {
-  const InfoContainerHeader({super.key});
+  final WeatherEntity weatherEntity;
+  const InfoContainerHeader({super.key, required this.weatherEntity});
 
   @override
   Widget build(BuildContext context) {
+    final String time = helperFunction.formatTime(
+      dateTime: weatherEntity.last_updated,
+    );
+    final String date = helperFunction.formatDate(
+      dateTime: weatherEntity.last_updated,
+    );
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.location_on_rounded, color: ColorsManager.primary),
-                const SizedBox(width: 6),
-                Text(
-                  'Dubai',
-                  style: GoogleFonts.inter(
-                    color: ColorsManager.primary,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.location_on_rounded, color: ColorsManager.primary),
+                  const SizedBox(width: 3),
+                  Expanded(
+                    child: Text(
+                      maxLines: 1,
 
-            Text(
-              'United Arab Emirates',
-              style: GoogleFonts.inter(
-                color: ColorsManager.secondarytext,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+                      weatherEntity.country,
+                      style: GoogleFonts.inter(
+                        color: ColorsManager.primary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 4),
+
+              Text(
+                weatherEntity.cityName,
+                style: GoogleFonts.inter(
+                  color: ColorsManager.secondarytext,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
         Spacer(),
 
@@ -45,7 +61,7 @@ class InfoContainerHeader extends StatelessWidget {
           children: [
             const SizedBox(width: 6),
             Text(
-              '03:29 AM',
+              time,
               style: GoogleFonts.inter(
                 color: ColorsManager.secondary,
                 fontSize: 24,
@@ -55,7 +71,7 @@ class InfoContainerHeader extends StatelessWidget {
             const SizedBox(height: 4),
 
             Text(
-              '22 Jul, 2026',
+              date,
               style: GoogleFonts.inter(
                 color: ColorsManager.secondarytext,
                 fontSize: 16,

@@ -11,6 +11,8 @@ class CurrentModel {
   final String windDir;
 
   final int humidity;
+  final String last_updated;
+  final num cloud;
 
   final double feelsLikeC;
 
@@ -29,6 +31,8 @@ class CurrentModel {
     required this.feelsLikeC,
     required this.uv,
     required this.chanceOfRain,
+    required this.cloud,
+    required this.last_updated,
   });
 
   factory CurrentModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +47,8 @@ class CurrentModel {
       feelsLikeC: (json['feelslike_c'] as num).toDouble(),
       uv: (json['uv'] as num).toDouble(),
       chanceOfRain: json['chance_of_rain'],
+      cloud: json['cloud'],
+      last_updated: json['last_updated'],
     );
   }
 }

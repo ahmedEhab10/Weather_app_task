@@ -2,66 +2,65 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import 'failure.dart';
+
 class ApiErrorHandler {
-  static Exception handle(DioException error) {
+  static Failure handle(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
-        return Exception("Connection timeout");
+        return const NetworkFailure("Connection timeout");
 
       case DioExceptionType.sendTimeout:
-        return Exception("Send timeout");
+        return const NetworkFailure("Send timeout");
 
       case DioExceptionType.receiveTimeout:
-        return Exception("Receive timeout");
+        return const NetworkFailure("Receive timeout");
+
+      case DioExceptionType.transformTimeout:
+        return const NetworkFailure("Response parsing timeout");
 
       case DioExceptionType.connectionError:
-        return Exception("No internet connection");
+        return const NetworkFailure("No internet connection");
 
       case DioExceptionType.cancel:
-        return Exception("Request cancelled");
+        return const UnknownFailure("Request cancelled");
 
       case DioExceptionType.badCertificate:
-        return Exception("Bad certificate");
+        return const ServerFailure("Bad certificate");
 
       case DioExceptionType.badResponse:
         return _handleStatusCode(error.response);
 
       case DioExceptionType.unknown:
         if (error.error is SocketException) {
-          return Exception("No internet connection");
+          return const NetworkFailure("No internet connection");
         }
-
-        return Exception("Something went wrong");
-      case DioExceptionType.transformTimeout:
-        return Exception("Transform timeout");
+        return const UnknownFailure("Something went wrong");
     }
   }
 
-  static Exception _handleStatusCode(Response? response) {
+  static Failure _handleStatusCode(Response? response) {
     switch (response?.statusCode) {
       case 400:
-        return Exception("Bad request");
+        return const ServerFailure("Bad request");
 
       case 401:
-        return Exception("Unauthorized");
+        return const ServerFailure("Unauthorized");
 
       case 403:
-        return Exception("Forbidden");
+        return const ServerFailure("Forbidden");
 
       case 404:
-        return Exception("Not found");
+        return const ServerFailure("Not found");
 
       case 500:
-        return Exception("Internal server error");
-
-      case 502:
-        return Exception("Bad gateway");
+        return const ServerFailure("Internal server error");
 
       case 503:
-        return Exception("Service unavailable");
+        return const ServerFailure("Service unavailable");
 
       default:
-        return Exception(
+        return ServerFailure(
           response?.data["message"] ?? "Unexpected server error",
         );
     }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/Core/Helper/Helper_Function.dart';
 import 'package:weather_app/Core/resources/Colors_Manager.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/info_container_header.dart';
+import 'package:weather_app/features/Home/domain/Entity/Weather_Entity.dart';
 
 class InformationContinar extends StatelessWidget {
-  const InformationContinar({super.key});
-
+  const InformationContinar({super.key, required this.weatherEntity});
+  final WeatherEntity weatherEntity;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,12 +41,12 @@ class InformationContinar extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InfoContainerHeader(),
+            InfoContainerHeader(weatherEntity: weatherEntity),
             const SizedBox(height: 12),
             Row(
               children: [
                 Text(
-                  '33°C',
+                  '${weatherEntity.tempC}°C',
                   style: GoogleFonts.inter(
                     fontSize: 56,
                     fontWeight: FontWeight.bold,
@@ -59,7 +61,11 @@ class InformationContinar extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.contain,
-                        image: AssetImage('assets/images/Day Storm.png'),
+                        image: AssetImage(
+                          helperFunction.getweatherimage(
+                            weatherEntity.condition,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -68,7 +74,7 @@ class InformationContinar extends StatelessWidget {
             ),
 
             Text(
-              'Hazy',
+              weatherEntity.condition,
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -77,7 +83,7 @@ class InformationContinar extends StatelessWidget {
             ),
 
             Text(
-              'Feels like 45.8°C',
+              'Feels like ${weatherEntity.feelsLikeC}°C',
               style: GoogleFonts.inter(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
