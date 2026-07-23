@@ -1,18 +1,25 @@
 part of 'weather_cubit.dart';
 
 @immutable
-sealed class WeatherState {}
+sealed class WeatherState {
+  final List<WeatherEntity> recentSearches;
+  const WeatherState({this.recentSearches = const []});
+}
 
-final class WeatherInitial extends WeatherState {}
+final class WeatherInitial extends WeatherState {
+  const WeatherInitial({super.recentSearches});
+}
 
-final class WeatherLoading extends WeatherState {}
+final class WeatherLoading extends WeatherState {
+  const WeatherLoading({super.recentSearches});
+}
 
 final class WeatherSuccess extends WeatherState {
   final WeatherEntity weatherEntity;
-  WeatherSuccess({required this.weatherEntity});
+  const WeatherSuccess({required this.weatherEntity, super.recentSearches});
 }
 
 final class WeatherFailure extends WeatherState {
   final Failure failure;
-  WeatherFailure({required this.failure});
+  const WeatherFailure({required this.failure, super.recentSearches});
 }

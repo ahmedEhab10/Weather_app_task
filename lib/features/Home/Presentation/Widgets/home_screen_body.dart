@@ -76,6 +76,63 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 ),
 
                 const SizedBox(height: 16),
+
+                if (state.recentSearches.isNotEmpty) ...[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Recent Searches",
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: ColorsManager.primary,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.recentSearches.length,
+                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                      itemBuilder: (context, index) {
+                        final item = state.recentSearches[index];
+                        return GestureDetector(
+                          onTap: () {
+                            _searchController.text = item.cityName;
+                            context.read<WeatherCubit>().getWeather(cityName: item.cityName);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: ColorsManager.lightBackground,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: ColorsManager.primary.withOpacity(0.2)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.history, size: 16, color: ColorsManager.primary),
+                                const SizedBox(width: 6),
+                                Text(
+                                  "${item.cityName} (${item.tempC.round()}°C)",
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorsManager.secondarytext,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
                 if (state is WeatherLoading) ...[
                   Lottie.asset(
                     "assets/Animation/thunderstorms overcast-rain no result found.json",

@@ -51,4 +51,21 @@ class CurrentModel {
       last_updated: json['last_updated'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'temp_c': tempC,
+      'temp_f': tempF,
+      'is_day': isDay,
+      'condition': condition.toJson(),
+      'wind_kph': windKph,
+      'wind_dir': windDir,
+      'humidity': humidity,
+      'feelslike_c': feelsLikeC,
+      'uv': uv,
+      'chance_of_rain': chanceOfRain,
+      'cloud': cloud,
+      'last_updated': last_updated,
+    };
+  }
 }

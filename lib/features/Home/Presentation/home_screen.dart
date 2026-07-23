@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather_app/Core/Const/Api_Constants.dart';
 import 'package:weather_app/Core/Services/Api_Client.dart';
 import 'package:weather_app/Core/resources/Colors_Manager.dart';
 import 'package:weather_app/features/Home/Presentation/Widgets/home_screen_body.dart';
 import 'package:weather_app/features/Home/Presentation/cubit/Weather_cubit/weather_cubit.dart';
+import 'package:weather_app/features/Home/data/data_source/Local/Weather_local_data_source.dart';
 import 'package:weather_app/features/Home/data/data_source/Remote/Weather_remote_Api_data_source.dart';
 import 'package:weather_app/features/Home/data/repositories_impl/Get_Weather_Repo_Impl.dart';
 
@@ -36,6 +38,9 @@ class HomeScreen extends StatelessWidget {
               apiClient: ApiClient(
                 dio: Dio(BaseOptions(baseUrl: ApiConstants.baseUrl)),
               ),
+            ),
+            weatherLocalDataSource: WeatherLocalDataSourceImpl(
+              box: Hive.box('weather_box'),
             ),
           ),
         ),

@@ -19,8 +19,8 @@ abstract class helperFunction {
       image = 'assets/drizzle.svg';
     } else if (weathercondition == 'Haze') {
       image = 'assets/images/Day Wind.png';
-    } else if (weathercondition == 'Fog') {
-      image = 'assets/fog.svg';
+    } else if (weathercondition == 'Partly Cloudy') {
+      image = 'assets/images/Day Clouds.png';
     } else if (weathercondition == 'Smoke') {
       image = 'assets/smoke.svg';
     } else if (weathercondition == 'Dust') {

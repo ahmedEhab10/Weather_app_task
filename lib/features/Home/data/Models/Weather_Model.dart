@@ -36,4 +36,11 @@ class WeatherModel {
       last_updated: current.last_updated,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'location': location.toJson(),
+      'current': current.toJson(),
+    };
+  }
 }

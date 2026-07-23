@@ -31,4 +31,17 @@ class LocationModel {
       localTime: json['localtime'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'region': region,
+      'country': country,
+      'lat': lat,
+      'lon': lon,
+      'tz_id': tzId,
+      'localtime_epoch': localtimeEpoch,
+      'localtime': localTime,
+    };
+  }
 }

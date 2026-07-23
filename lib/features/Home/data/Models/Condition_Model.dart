@@ -16,4 +16,12 @@ class ConditionModel {
       code: json['code'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'text': text,
+      'icon': icon,
+      'code': code,
+    };
+  }
 }
